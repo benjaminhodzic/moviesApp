@@ -57,3 +57,32 @@ export async function fetchRating(id){
     //setTimeout(3000);
     
   }
+
+export async function fetchForHomePage(){
+    console.log('poziv');
+    const numberOfPages = 3;
+    let moviesCollection = [];
+    for (let pageNum = 1; pageNum < numberOfPages+1; pageNum++) {
+        const url = `https://moviesdatabase.p.rapidapi.com/titles?list=top_rated_english_250&page=${pageNum}`;
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': '9b7924a126msh32d1539dac2ed65p158020jsn3314d79606f2',
+                'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
+            }
+        };
+
+        
+        const response = await fetch(url, options);
+        const result = await response.json();
+        const results = result.results;
+        //console.log({...moviesCollection});
+        //moviesCollection = [...moviesCollection, result];
+        results.forEach(movie => {
+            moviesCollection.push(movie);
+        })
+        
+    }
+    
+    return moviesCollection;
+}

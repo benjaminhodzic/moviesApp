@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import MovieSmallCart from './MovieSmallCart.jsx'
 import { useQuery } from '@tanstack/react-query'
-import {fetchMovie} from './util/http.js'
+import {fetchForHomePage, fetchMovie} from './util/http.js'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import HomePage from './HomePage.jsx'
 import TestRoute from './TestRoute.jsx'
@@ -19,7 +19,7 @@ function App() {
     
 
     children: [
-      {index: true, element: <HomePage />},
+      {index: true, element: <HomePage />, loader: async () => { return await fetchForHomePage(); }},
       {path: '/test', element: <TestRoute props={'tt0436992'} />},
       {path: '/titles/:movieID', element: <MoviePage />}
     ]
