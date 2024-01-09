@@ -1,8 +1,13 @@
-export async function fetchMovie(){
+export async function fetchMovie(receivedID){
 
-    const id = 'tt0436992';
+    const inception = 'tt1375666';
+    const squidGame = 'tt10919420'
+
+    if (!receivedID) return;
+
+    const id = receivedID;
      
-    const response = await fetch(`https://moviesdatabase.p.rapidapi.com/titles/${id}`,
+    const response = await fetch(`https://moviesdatabase.p.rapidapi.com/titles/${id}?info=base_info`,
     {
         method: 'GET',
         headers: {
@@ -12,18 +17,28 @@ export async function fetchMovie(){
     });
 
     if (!response.ok) {
+        
         const error = new Error('An error occured!');
         error.code = response.status;
         error.info = await response.json();
+        console.error(response.info);
         throw error;
     }
 
     const movieData = await response.json();
     //return data;
     //const copyValue = JSON.parse(JSON.stringify(dataToCopy.results));
+
+    /*
     let getRatingValue = await fetchRating(id);
     const zaFinalReturn = {...movieData.results, ...getRatingValue.results};
     return zaFinalReturn;
+    */
+
+    const zaFinalReturn = {...movieData.results};
+    console.log(zaFinalReturn);
+    return movieData;
+
     //updateData(copyValue);
     //console.log(copyValue);
     //console.log(copyValue.id === data.id);
@@ -83,6 +98,6 @@ export async function fetchForHomePage(){
         })
         
     }
-    
+    //console.log(moviesCollection);
     return moviesCollection;
 }

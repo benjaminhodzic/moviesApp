@@ -8,6 +8,7 @@ import HomePage from './HomePage.jsx'
 import TestRoute from './TestRoute.jsx'
 import MoviePage from './MoviePage.jsx'
 import RootLayout from './Root.jsx'
+import ErrorPage from './ErrorPage.jsx'
 
 function App() {
 
@@ -16,11 +17,11 @@ function App() {
   const router = createBrowserRouter([{
     path: '/',
     element: <RootLayout/>,
-    
+    errorElement: ErrorPage,
 
     children: [
       {index: true, element: <HomePage />, loader: async () => { return await fetchForHomePage(); }},
-      {path: '/test', element: <TestRoute props={'tt0436992'} />},
+      {path: '/test', element: <TestRoute />},
       {path: '/titles/:movieID', element: <MoviePage />}
     ]
   }
